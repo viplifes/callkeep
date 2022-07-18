@@ -178,7 +178,7 @@ static CXProvider* sharedProvider;
     NSLog(@"[CallKeep][setup] options = %@", options);
 #endif
     _version = [[[NSProcessInfo alloc] init] operatingSystemVersion];
-    self.callKeepCallController = [[CXCallController alloc] init];
+    self.callKeepCallController = [[CXCallController alloc] initWithQueue:dispatch_get_main_queue()];
     NSDictionary *settings = [[NSMutableDictionary alloc] initWithDictionary:options];
     // Store settings in NSUserDefault
     [[NSUserDefaults standardUserDefaults] setObject:settings forKey:@"CallKeepSettings"];
@@ -187,7 +187,7 @@ static CXProvider* sharedProvider;
     [CallKeep initCallKitProvider];
     
     self.callKeepProvider = sharedProvider;
-    [self.callKeepProvider setDelegate:self queue:nil];
+    [self.callKeepProvider setDelegate:self queue:dispatch_get_main_queue()];
     [self voipRegistration];
 }
 
